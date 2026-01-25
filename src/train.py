@@ -80,4 +80,4 @@ if __name__=="__main__":
         train(epoch)
         test()
 
-    torch.save(model.state_dict(), "src/mnist_cnn.pth")
+    torch.save(model.state_dict(), "data/models/mnist_cnn.pth")
