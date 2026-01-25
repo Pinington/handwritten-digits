@@ -52,7 +52,8 @@ def train(epoch):
         optimizer.step()
 
         if batch_index % 25 == 0:
-            print(f"Train Epoch: {epoch} [{batch_index * len(data)}/{len(loaders['train'].dataset)} ({100. * batch_index / len(loaders['train']):.0f}%)] {loss.item():.6f}")
+            print(f"Train Epoch: {epoch} [{batch_index * len(data)}/{len(loaders['train'].dataset)} ", end = "")
+            print(f"({100. * batch_index / len(loaders['train']):.0f}%)] {loss.item():.6f}")
 
 
 def test():
