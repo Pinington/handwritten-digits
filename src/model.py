@@ -15,7 +15,7 @@ class Net(nn.Module):
 
         conv2_out = 20
         kernel2_size = 5
-        dropout_ratio = 0.5
+        dropout_ratio = 0.2
 
         conv2_out_size = (pool1_out_size - kernel2_size + 1) 
         pool2_out_size = conv2_out_size // 2 # 2x2 MaxPool used so we divide output sizes by 2
