@@ -11,8 +11,8 @@
 
 
 # Hand Written Digit Recognition
-This project uses convolutional neural networks to predict a handwritten digit's value
+This project uses convolutional neural networks to predict a handwritten digit's value. The goal is to create website where hand written digits are recognized, and potentially a way to implement full hand written equations to be solved.
 
 # Usage
-After running train.py, a mnist_cnn.pth file is created with the model's parameters, use main.py to try it out on a specific image
+After running train.py, a mnist_cnn.pth file is created with the model's parameters, as well as the training data if not already installed. Use main.py to try it out on a specific image
 
