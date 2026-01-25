@@ -1,3 +1,4 @@
 env/
 __pycache__
-data/MNIST/raw/*
+data/MNIST/raw/
+data/MNIST/processed/
