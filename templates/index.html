@@ -1,18 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HandWritten Digits</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
-</head>
-<body>
-    <canvas width="112px" height="112px" id="canvas">
-        Sorry, your browser does not support &lt;canvas&gt;
-    </canvas>
-    <button type="button" id="clear-canvas">Clear</button>
+{% extends 'base.html' %}
 
-    <script src="../static/js/jquery.js"></script>
-    <script src="../static/js/script.js"></script>
-</body>
-</html>
+{% block result %}
+<div id="result">
+    <p>Result</p>
+</div>
+{% endblock %}

@@ -20,10 +20,15 @@ data_set = datasets.MNIST(
 image, label = data_set[42]
 data = image.unsqueeze(0).to(device)
 
+def predict(im_data):
+    with torch.no_grad():
+        output = model(im_data)  # [batch, 1, 28, 28]
+        prediction = output.argmax(dim=1).item()
+        return prediction
+
+
 # Predict
-with torch.no_grad():
-    output = model(data)  # [batch, 1, 28, 28]
-    prediction = output.argmax(dim=1).item()
+prediction = predict(data)
 
 print(f"Prediction: {prediction}")
 
