@@ -1,5 +1,5 @@
 import torch
-from model import Net  # make sure model.py is in same folder or package
+from .model import Net  # make sure model.py is in same folder or package
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
