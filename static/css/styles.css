@@ -1,9 +1,13 @@
+body {
+    background-color: beige;
+}
+
 #canvas {
-    background-color: aliceblue;
+    background-color: black;
 }
 
 #result {
     width: 100px;
     height: 100px;
-    background-color: aliceblue;
+    background-color: white;
 }
