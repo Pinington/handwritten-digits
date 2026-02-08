@@ -3,30 +3,71 @@ const ctx = canvas.getContext("2d");
 
 let drawing = false;
 
-$("#canvas")
-  .on("mousedown", function (e) {
+// Helper: get coordinates for mouse or touch
+function getPos(e) {
+    if (e.touches) {
+        const rect = canvas.getBoundingClientRect();
+        return {
+            x: e.touches[0].clientX - rect.left,
+            y: e.touches[0].clientY - rect.top
+        };
+    } else {
+        return {
+            x: e.offsetX,
+            y: e.offsetY
+        };
+    }
+}
+
+// Start drawing
+function startDraw(e) {
     drawing = true;
     ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
-  })
-  .on("mouseup mouseleave", function () {
+    const pos = getPos(e);
+    ctx.moveTo(pos.x, pos.y);
+    e.preventDefault();
+}
+
+// Stop drawing
+function stopDraw(e) {
     drawing = false;
-  })
-  .on("mousemove", function (e) {
+    e.preventDefault();
+}
+
+// Draw
+function draw(e) {
     if (!drawing) return;
+    const pos = getPos(e);
 
     ctx.lineWidth = 6;
     ctx.lineCap = "round";
     ctx.strokeStyle = "white";
 
-    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.lineTo(pos.x, pos.y);
     ctx.stroke();
-  });
+    e.preventDefault();
+}
 
+// Mouse events
+$("#canvas")
+  .on("mousedown", startDraw)
+  .on("mousemove", draw)
+  .on("mouseup mouseleave", stopDraw);
 
+// Touch events
+$("#canvas")
+  .on("touchstart", startDraw)
+  .on("touchmove", draw)
+  .on("touchend touchcancel", stopDraw);
+
+// Clear canvas
 $("#clear-canvas").on("click", function() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-})
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+// Prevent scrolling when touching the canvas
+canvas.addEventListener("touchstart", e => e.preventDefault(), { passive: false });
+canvas.addEventListener("touchmove", e => e.preventDefault(), { passive: false });
 
 function sendCanvas() {
     const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
