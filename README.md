@@ -9,6 +9,8 @@
       \\ __________/   \\__/          \\___/     \\_________/      \\___/   \\___/  
 ```
 
+# Check out full website
+[Click here to see the current online version](https://glmch-ensisa.alwaysdata.net/)
 
 # Hand Written Digit Recognition
 This project uses convolutional neural networks to predict a handwritten digit's value. The goal is to create website where hand written digits are recognized, and potentially a way to implement full hand written equations to be solved.
