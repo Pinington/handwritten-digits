@@ -80,7 +80,7 @@ function sendCanvas() {
         const b = data[i + 2];
 
         // grayscale value 0–255
-        const value = Math.round(0.299 * r + 0.587 * g + 0.114 * b);
+        const value = Math.round(0.299 * r + 0.587 * g + 0.114 * b) / 255;
         gray.push(value);
     }
 

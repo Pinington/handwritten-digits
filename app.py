@@ -29,9 +29,6 @@ def predict_route():
         # downsample to 28x28 for MNIST model
         img_tensor = F.interpolate(img_tensor, size=(28, 28), mode='bilinear', align_corners=False)
 
-        # normalize to [0,1]
-        img_tensor /= 255.0
-
         prediction = predict(img_tensor)
 
         #plt.imshow(img_tensor[0,0].cpu(), cmap='gray')
