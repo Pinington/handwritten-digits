@@ -39,7 +39,7 @@ function draw(e) {
     if (!drawing) return;
     const pos = getPos(e);
 
-    ctx.lineWidth = 6;
+    ctx.lineWidth = 3;
     ctx.lineCap = "round";
     ctx.strokeStyle = "white";
 
