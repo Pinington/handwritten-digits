@@ -26,22 +26,28 @@ class Net(nn.Module):
         # Convolutional layers 
         # Stride is 1 because images are small
         self.conv1 = nn.Conv2d(1, conv1_out, kernel_size=kernel1_size)
+        self.bn1 = nn.BatchNorm2d(32)
+
         self.conv2 = nn.Conv2d(conv1_out, conv2_out, kernel_size=kernel2_size)
+        self.bn2 = nn.BatchNorm2d(64)
         self.conv2_dropout = nn.Dropout2d(p = dropout_ratio)
 
         # Fully connected layers
         self.fc1 = nn.Linear(self.fc1_in, fc1_out)
+        self.fc1_dropout = nn.Dropout(p=dropout_ratio)
         self.fc2 = nn.Linear(fc1_out, out) # 10 digits 
 
 
     def forward(self, x):
-        x = F.relu(F.max_pool2d(self.conv1(x), 2))
-        x = F.relu(F.max_pool2d(self.conv2_dropout(self.conv2(x)), 2))
+        x = F.leaky_relu(self.bn1(self.conv1(x)))
+        x = F.max_pool2d(x, 2)
+
+        x = F.leaky_relu(self.bn2(self.conv2_dropout(self.conv2(x))))
+        x = F.max_pool2d(x, 2)
 
         x = x.view(-1, self.fc1_in)
 
-        x = F.relu(self.fc1(x))
-        x = F.dropout(x, training=self.training)
+        x = F.leaky_relu(self.fc1(x))
+        x = self.fc1_dropout(x)
         x = self.fc2(x)
-
         return x

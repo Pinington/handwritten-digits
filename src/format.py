@@ -18,16 +18,17 @@ def divide_image(image):
 
 def pad_to_square(img, margin_ratio=0.2):
     h, w = img.shape
-    base_size = max(h, w)
+    target_size = max(h, w)  # The square size is determined by the larger dimension
 
-    margin = int(base_size * margin_ratio)
-    size = base_size + 2 * margin
+    # Calculate horizontal padding
+    total_padding = target_size - w
+    left_padding = total_padding // 2 + int(target_size * margin_ratio)
+    right_padding = total_padding - total_padding // 2 + int(target_size * margin_ratio)
 
-    padded = np.zeros((size, size), dtype=img.dtype)
-
-    y_offset = margin + (base_size - h) // 2
-    x_offset = margin + (base_size - w) // 2
-
-    padded[y_offset:y_offset+h, x_offset:x_offset+w] = img
+    # Create padded array
+    padded = np.zeros((h, w + left_padding + right_padding), dtype=img.dtype)
+    
+    # Place original image
+    padded[:, left_padding:left_padding+w] = img
 
     return padded
