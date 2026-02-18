@@ -7,6 +7,7 @@ from src.format import *
 
 import ast
 import operator
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
@@ -70,11 +71,10 @@ def predict_route():
             c = pad_to_square(c)
             img_tensor = torch.tensor(c).unsqueeze(0).unsqueeze(0).float()
             img_tensor = F.interpolate(img_tensor, size=(28, 28), mode='bilinear', align_corners=False)
+            img_tensor = (img_tensor != 0).float()
             prediction = predict(img_tensor)
             result += str(prediction)
 
-        #plt.imshow(img_tensor[0,0].cpu(), cmap='gray')
-        #plt.show()
         result = result.replace('[', '(').replace(']', ')')
         return jsonify({"prediction": result, "answer": eval_safe(result)})
 

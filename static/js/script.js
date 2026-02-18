@@ -84,7 +84,8 @@ function sendCanvas() {
         const b = data[i + 2];
 
         // grayscale value 0–255 normalized then made binary
-        const value = Math.round(Math.round(0.299 * r + 0.587 * g + 0.114 * b) / 255);
+        const grayValue = 0.299*r + 0.587*g + 0.114*b;
+        const value = grayValue >= 128 ? 1 : 0;
         gray.push(value);
     }
 
