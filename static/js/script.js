@@ -5,18 +5,22 @@ let drawing = false;
 
 // Helper: get coordinates for mouse or touch
 function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    let x, y;
+
     if (e.touches) {
-        const rect = canvas.getBoundingClientRect();
-        return {
-            x: e.touches[0].clientX - rect.left,
-            y: e.touches[0].clientY - rect.top
-        };
+        x = e.touches[0].clientX - rect.left;
+        y = e.touches[0].clientY - rect.top;
     } else {
-        return {
-            x: e.offsetX,
-            y: e.offsetY
-        };
+        x = e.offsetX;
+        y = e.offsetY;
     }
+
+    // Scale to canvas internal size
+    x = x * (canvas.width / rect.width);
+    y = y * (canvas.height / rect.height);
+
+    return { x, y };
 }
 
 // Start drawing
