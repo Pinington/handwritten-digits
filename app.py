@@ -5,7 +5,46 @@ import torch.nn.functional as F
 from src.infer import predict
 from src.format import *
 
+import ast
+import operator
+
 app = Flask(__name__)
+
+# Allowed operators
+operators = {
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.truediv
+}
+
+def eval_safe(expr: str):
+    """
+    Safely evaluate a simple arithmetic expression with numbers and +, -, *, /
+    Returns the result, or None if the expression is invalid.
+    """
+    def _eval(node):
+        if isinstance(node, ast.BinOp):
+            left = _eval(node.left)
+            right = _eval(node.right)
+            op_type = type(node.op)
+            if op_type in operators:
+                return operators[op_type](left, right)
+            else:
+                raise ValueError("Unsupported operator")
+        elif isinstance(node, ast.Constant):
+            if isinstance(node.value, (int, float)):
+                return node.value
+            else:
+                raise ValueError("Unsupported constant")
+        else:
+            raise ValueError("Unsupported expression")
+    
+    try:
+        tree = ast.parse(expr, mode='eval')
+        return _eval(tree.body)
+    except Exception:
+        return None
 
 @app.route('/')
 def index():
@@ -36,8 +75,8 @@ def predict_route():
 
         #plt.imshow(img_tensor[0,0].cpu(), cmap='gray')
         #plt.show()
-
-        return jsonify({"prediction": result})
+        result = result.replace('[', '(').replace(']', ')')
+        return jsonify({"prediction": result, "answer": eval_safe(result)})
 
     except Exception as e:
         print("Error:", e)

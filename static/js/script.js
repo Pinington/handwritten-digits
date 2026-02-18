@@ -98,6 +98,7 @@ function sendCanvas() {
     .then(res => res.json())
     .then(data => {
         console.log("Prediction:", data.prediction);
-        $("#result").text("Result is " + data.prediction)
+        $("#expression").text("Expression is " + data.prediction)
+        $("#result").text("Result is " + data.answer)
     });
 }

@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <canvas width="336px" height="112px" id="canvas">
+    <canvas width="600px" height="200px" id="canvas">
         Sorry, your browser does not support &lt;canvas&gt;
     </canvas>
-    <button type="button" id="clear-canvas">Clear</button>
-    <button type="button" onclick="sendCanvas()">Predict</button>  
+    <div id="button-container">
+        <button type="button" id="clear-canvas">Clear</button>
+        <button type="button" onclick="sendCanvas()">Predict</button>  
+    </div>
 
     {% block result %}
 
